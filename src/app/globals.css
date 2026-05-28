@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --green: #56a45b;
+  --green-mid: #3f8f48;
+  --green-deep: #1a4a20;
+  --green-dark: #0e2714;
+  --orange: #f4a321;
+  --orange-dark: #d97706;
+  --cream: #F5F1E8;
+  --cream-light: #F8F5EE;
+}
+
+* { scroll-behavior: smooth; }
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--cream);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(86,164,91,0.35); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(86,164,91,0.65); }
+
+/* Selection */
+::selection { background: rgba(244,163,33,0.22); color: #1a4a20; }
+
+@layer utilities {
+
+  /* Gradient text — green → orange */
+  .gradient-text {
+    background: linear-gradient(135deg, #1a4a20 0%, #56a45b 45%, #f4a321 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gradient-text-bright {
+    background: linear-gradient(135deg, #56a45b 0%, #7ddf83 45%, #f4a321 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Speed lines — Cheetah signature diagonal pattern */
+  .speed-bg {
+    background:
+      linear-gradient(135deg, #1a4a20 0%, #0e2714 50%, #0d1f10 100%),
+      repeating-linear-gradient(
+        -62deg,
+        transparent,
+        transparent 18px,
+        rgba(86,164,91,0.04) 18px,
+        rgba(86,164,91,0.04) 20px
+      );
+    background-blend-mode: normal, overlay;
+  }
+
+  /* Aurora blobs */
+  .aurora-bg {
+    background:
+      radial-gradient(ellipse 900px 520px at 6% 0%, rgba(86,164,91,0.13), transparent 65%),
+      radial-gradient(ellipse 700px 450px at 96% 4%, rgba(244,163,33,0.09), transparent 60%),
+      linear-gradient(180deg, #F5F1E8 0%, #F8F5EE 100%);
+  }
+
+  /* Aurora card — animated gradient border on hover */
+  .aurora-card {
+    position: relative;
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(0,0,0,0.09);
+    transition: box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s ease;
+  }
+  .aurora-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, #56a45b, #f4a321, rgba(96,160,255,0.6), #56a45b, #f4a321);
+    background-size: 300% 300%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    animation: gradientX 5s linear infinite;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .aurora-card:hover::before { opacity: 1; }
+  .aurora-card:hover {
+    transform: translateY(-4px) scale(1.013);
+    box-shadow:
+      0 0 0 1px rgba(86,164,91,0.08),
+      0 4px 8px -2px rgba(26,74,32,0.10),
+      0 20px 48px -12px rgba(26,74,32,0.20),
+      0 0 80px -40px rgba(244,163,33,0.14);
+  }
+
+  /* Dark glass card */
+  .glass-dark {
+    background: rgba(13,31,16,0.65);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid rgba(86,164,91,0.15);
+  }
+
+  /* Light glass card */
+  .glass-light {
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.62);
+  }
+
+  /* Brand separator — 2px green→orange bar */
+  .brand-sep {
+    height: 2px;
+    background: linear-gradient(90deg, #56a45b, #f4a321);
+    opacity: 0.55;
+    border-radius: 2px;
+  }
+
+  /* Glow utilities */
+  .glow-green {
+    box-shadow: 0 0 20px rgba(86,164,91,0.22), 0 0 60px rgba(86,164,91,0.08);
+  }
+  .glow-orange {
+    box-shadow: 0 0 20px rgba(244,163,33,0.22), 0 0 60px rgba(244,163,33,0.08);
+  }
+  .glow-green-strong {
+    box-shadow: 0 0 0 1px rgba(86,164,91,0.2), 0 8px 24px rgba(26,74,32,0.25), 0 0 60px rgba(86,164,91,0.12);
+  }
+
+  /* Status pills */
+  .status-ok    { background: rgba(5,150,105,0.09); border: 1px solid rgba(5,150,105,0.22); color: #065f46; }
+  .status-watch { background: rgba(245,158,11,0.09); border: 1px solid rgba(245,158,11,0.25); color: #92400e; }
+  .status-crit  { background: rgba(239,68,68,0.09); border: 1px solid rgba(239,68,68,0.22); color: #991b1b; }
+
+  /* Section label style */
+  .label-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #56a45b;
+  }
+
+  /* Shimmer text */
+  .shimmer-text {
+    background: linear-gradient(
+      90deg,
+      #1a4a20 0%, #56a45b 18%, #f4a321 36%, #56a45b 54%, #1a4a20 72%, #56a45b 90%, #1a4a20 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+}
